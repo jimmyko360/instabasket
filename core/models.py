@@ -8,7 +8,7 @@ metric_weight_choices = ["mg", "g", "kg"]
 
 
 class Ingredient(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
     created_on = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
 
