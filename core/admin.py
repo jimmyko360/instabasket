@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Ingredient, Quantity, Recipe
+from .models import Ingredient, Quantity, Recipe, List
 
 
 class IngredientAdmin(admin.ModelAdmin):
@@ -44,6 +44,12 @@ class RecipeAdmin(admin.ModelAdmin):
     )
 
 
+class ListAdmin(admin.ModelAdmin):
+    list_filter = ("title", "recipes", "ingredients", "created_on", "last_modified")
+    list_display = ("title", "created_on", "last_modified")
+
+
 admin.site.register(Ingredient, IngredientAdmin)
 admin.site.register(Quantity, QuantityAdmin)
 admin.site.register(Recipe, RecipeAdmin)
+admin.site.register(List, ListAdmin)
