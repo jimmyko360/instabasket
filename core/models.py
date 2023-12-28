@@ -20,7 +20,9 @@ class Ingredient(models.Model):
 
 
 class Quantity(models.Model):
-    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
+    ingredient = models.ForeignKey(
+        Ingredient, on_delete=models.CASCADE, related_name="quantities"
+    )
     quantity = models.DecimalField(max_digits=6, decimal_places=3)
     unit = models.CharField(
         max_length=5,
