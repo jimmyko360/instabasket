@@ -7,8 +7,11 @@ from core.models import Ingredient, Quantity, Recipe, List
 class IngredientSerializer(serializers.ModelSerializer):
     # owner = serializers.ReadOnlyField(source="owner.username")
     quantities = serializers.PrimaryKeyRelatedField(
-        many=True, queryset=Quantity.objects.all()
+        many=True, queryset=Quantity.objects.all(), required=False
     )
+    # created_on = serializers.DateTimeField(format="%x %X", read_only=True)
+    # last_modified = serializers.DateTimeField(format="%x %X", read_only=True)
+    # come back to this later
 
     class Meta:
         model = Ingredient
