@@ -6,10 +6,13 @@ from core.models import Ingredient, Quantity, Recipe, List
 
 class IngredientSerializer(serializers.ModelSerializer):
     # owner = serializers.ReadOnlyField(source="owner.username")
+    quantities = serializers.PrimaryKeyRelatedField(
+        many=True, queryset=Quantity.objects.all()
+    )
 
     class Meta:
         model = Ingredient
-        fields = ["id", "name", "created_on", "last_modified"]
+        fields = ["id", "name", "created_on", "last_modified", "quantities"]
 
 
 """
