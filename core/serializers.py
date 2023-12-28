@@ -6,16 +6,43 @@ from core.models import Ingredient, Quantity, Recipe, List
 
 class IngredientSerializer(serializers.ModelSerializer):
     # owner = serializers.ReadOnlyField(source="owner.username")
-    quantities = serializers.PrimaryKeyRelatedField(
-        many=True, queryset=Quantity.objects.all(), required=False
-    )
+
+    # reverse relationship with Quantity model
+    quantities = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+
+    # come back to this later:
     # created_on = serializers.DateTimeField(format="%x %X", read_only=True)
     # last_modified = serializers.DateTimeField(format="%x %X", read_only=True)
-    # come back to this later
 
     class Meta:
         model = Ingredient
         fields = ["id", "name", "created_on", "last_modified", "quantities"]
+
+
+class QuantitySerializer(serializers.ModelSerializer):
+    # reverse relationship with Recipe model
+    recipes = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+
+    # reverse relationship with List model
+    lists = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+
+    # set created_on and last_modified as read_only
+
+    class Meta:
+        model = Quantity
+        fields = [
+            "id",
+            "ingredient",
+            "quantity",
+            "unit",
+            "system",
+            "attribute",
+            "conversion_multiple",
+            "created_on",
+            "last_modified",
+            "recipes",
+            "lists",
+        ]
 
 
 """
