@@ -10,9 +10,24 @@ class IngredientSerializer(serializers.ModelSerializer):
     # reverse relationship with Quantity model
     quantities = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
 
-    # come back to this later:
-    # created_on = serializers.DateTimeField(format="%x %X", read_only=True)
-    # last_modified = serializers.DateTimeField(format="%x %X", read_only=True)
+    created_on = serializers.DateTimeField(read_only=True)
+    last_modified = serializers.DateTimeField(read_only=True)
+
+    def to_representation(self, instance):
+        user_timezone = self.get_user_timezone()
+        created_on = instance.created_on.astimezone(user_timezone)
+        last_modified = instance.last_modified.astimezone(user_timezone)
+        representation = super().to_representation(instance)
+        representation["created_on"] = created_on.strftime("%x %X %Z")
+        representation["last_modified"] = last_modified.strftime("%x %X %Z")
+
+        return representation
+
+    def get_user_timezone(self):
+        user_timezone = (
+            self.context["request"].user.tzinfo if "request" in self.context else None
+        )
+        return user_timezone
 
     class Meta:
         model = Ingredient
@@ -26,7 +41,24 @@ class QuantitySerializer(serializers.ModelSerializer):
     # reverse relationship with List model
     lists = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
 
-    # set created_on and last_modified as read_only
+    created_on = serializers.DateTimeField(read_only=True)
+    last_modified = serializers.DateTimeField(read_only=True)
+
+    def to_representation(self, instance):
+        user_timezone = self.get_user_timezone()
+        created_on = instance.created_on.astimezone(user_timezone)
+        last_modified = instance.last_modified.astimezone(user_timezone)
+        representation = super().to_representation(instance)
+        representation["created_on"] = created_on.strftime("%x %X %Z")
+        representation["last_modified"] = last_modified.strftime("%x %X %Z")
+
+        return representation
+
+    def get_user_timezone(self):
+        user_timezone = (
+            self.context["request"].user.tzinfo if "request" in self.context else None
+        )
+        return user_timezone
 
     class Meta:
         model = Quantity
