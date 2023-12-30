@@ -88,7 +88,7 @@ class Recipe(models.Model):
 
 class List(models.Model):
     title = models.CharField(max_length=100)
-    recipes = models.ManyToManyField(Recipe, blank=True)
+    recipes = models.ManyToManyField(Recipe, blank=True, related_name="lists")
     ingredients = models.ManyToManyField(Quantity, blank=True, related_name="lists")
     created_on = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
