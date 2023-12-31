@@ -40,7 +40,7 @@ class IngredientSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Ingredient
-        fields = ["id", "name", "created_on", "last_modified", "quantities"]
+        fields = ["url", "id", "name", "created_on", "last_modified", "quantities"]
 
 
 class QuantitySerializer(serializers.HyperlinkedModelSerializer):
@@ -81,6 +81,7 @@ class QuantitySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Quantity
         fields = [
+            "url",
             "id",
             "ingredient",
             "quantity",
@@ -128,7 +129,15 @@ class RecipeSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Recipe
-        fields = ["id", "name", "ingredients", "created_on", "last_modified", "lists"]
+        fields = [
+            "url",
+            "id",
+            "name",
+            "ingredients",
+            "created_on",
+            "last_modified",
+            "lists",
+        ]
 
 
 class ListSerializer(serializers.HyperlinkedModelSerializer):
@@ -161,6 +170,7 @@ class ListSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = List
         fields = [
+            "url",
             "id",
             "title",
             "recipes",
