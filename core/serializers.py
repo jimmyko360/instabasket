@@ -3,6 +3,9 @@ from core.models import Ingredient, Quantity, Recipe, List
 
 # from django.contrib.auth.models import User
 
+# used to create a placeholder timezone that should be received from the frontend
+import pytz
+
 
 class IngredientSerializer(serializers.ModelSerializer):
     # owner = serializers.ReadOnlyField(source="owner.username")
@@ -24,10 +27,15 @@ class IngredientSerializer(serializers.ModelSerializer):
         return representation
 
     def get_user_timezone(self):
-        user_timezone = (
-            self.context["request"].user.tzinfo if "request" in self.context else None
-        )
-        return user_timezone
+        # user_timezone = (
+        #     self.context["request"].user.tzinfo
+        #     if self.context["request"] and self.context["request"].user.tzinfo
+        #     else None
+        # )
+
+        # return user_timezone
+
+        return pytz.timezone("America/New_York")
 
     class Meta:
         model = Ingredient
@@ -57,10 +65,15 @@ class QuantitySerializer(serializers.ModelSerializer):
         return representation
 
     def get_user_timezone(self):
-        user_timezone = (
-            self.context["request"].user.tzinfo if "request" in self.context else None
-        )
-        return user_timezone
+        # user_timezone = (
+        #     self.context["request"].user.tzinfo
+        #     if self.context["request"] and self.context["request"].user.tzinfo
+        #     else None
+        # )
+
+        # return user_timezone
+
+        return pytz.timezone("America/New_York")
 
     class Meta:
         model = Quantity
@@ -99,10 +112,15 @@ class RecipeSerializer(serializers.ModelSerializer):
         return representation
 
     def get_user_timezone(self):
-        user_timezone = (
-            self.context["request"].user.tzinfo if "request" in self.context else None
-        )
-        return user_timezone
+        # user_timezone = (
+        #     self.context["request"].user.tzinfo
+        #     if self.context["request"] and self.context["request"].user.tzinfo
+        #     else None
+        # )
+
+        # return user_timezone
+
+        return pytz.timezone("America/New_York")
 
     class Meta:
         model = Recipe
@@ -126,10 +144,15 @@ class ListSerializer(serializers.ModelSerializer):
         return representation
 
     def get_user_timezone(self):
-        user_timezone = (
-            self.context["request"].user.tzinfo if "request" in self.context else None
-        )
-        return user_timezone
+        # user_timezone = (
+        #     self.context["request"].user.tzinfo
+        #     if self.context["request"] and self.context["request"].user.tzinfo
+        #     else None
+        # )
+
+        # return user_timezone
+
+        return pytz.timezone("America/New_York")
 
     class Meta:
         model = List
