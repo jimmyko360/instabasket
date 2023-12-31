@@ -7,11 +7,12 @@ from core.models import Ingredient, Quantity, Recipe, List
 import pytz
 
 
-class IngredientSerializer(serializers.ModelSerializer):
+class IngredientSerializer(serializers.HyperlinkedModelSerializer):
     # owner = serializers.ReadOnlyField(source="owner.username")
 
-    # reverse relationship with Quantity model
-    quantities = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    quantities = serializers.HyperlinkedRelatedField(
+        many=True, view_name="quantity-detail", read_only=True
+    )
 
     created_on = serializers.DateTimeField(read_only=True)
     last_modified = serializers.DateTimeField(read_only=True)
@@ -42,14 +43,16 @@ class IngredientSerializer(serializers.ModelSerializer):
         fields = ["id", "name", "created_on", "last_modified", "quantities"]
 
 
-class QuantitySerializer(serializers.ModelSerializer):
+class QuantitySerializer(serializers.HyperlinkedModelSerializer):
     # owner = serializers.ReadOnlyField(source="owner.username")
 
-    # reverse relationship with Recipe model
-    recipes = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    recipes = serializers.HyperlinkedRelatedField(
+        many=True, view_name="recipe-detail", read_only=True
+    )
 
-    # reverse relationship with List model
-    lists = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    lists = serializers.HyperlinkedRelatedField(
+        many=True, view_name="list-detail", read_only=True
+    )
 
     created_on = serializers.DateTimeField(read_only=True)
     last_modified = serializers.DateTimeField(read_only=True)
@@ -92,11 +95,12 @@ class QuantitySerializer(serializers.ModelSerializer):
         ]
 
 
-class RecipeSerializer(serializers.ModelSerializer):
+class RecipeSerializer(serializers.HyperlinkedModelSerializer):
     # owner = serializers.ReadOnlyField(source="owner.username")
 
-    # reverse relationship with List model
-    lists = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    lists = serializers.HyperlinkedRelatedField(
+        many=True, view_name="list-detail", read_only=True
+    )
 
     created_on = serializers.DateTimeField(read_only=True)
     last_modified = serializers.DateTimeField(read_only=True)
@@ -127,7 +131,7 @@ class RecipeSerializer(serializers.ModelSerializer):
         fields = ["id", "name", "ingredients", "created_on", "last_modified", "lists"]
 
 
-class ListSerializer(serializers.ModelSerializer):
+class ListSerializer(serializers.HyperlinkedModelSerializer):
     # owner = serializers.ReadOnlyField(source="owner.username")
 
     created_on = serializers.DateTimeField(read_only=True)
