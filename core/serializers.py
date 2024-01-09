@@ -7,13 +7,34 @@ import pytz
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
+    ingredients = serializers.HyperlinkedRelatedField(
+        many=True, view_name="ingredient-detail", read_only=True
+    )
+    quantities = serializers.HyperlinkedRelatedField(
+        many=True, view_name="quantity-detail", read_only=True
+    )
+    recipes = serializers.HyperlinkedRelatedField(
+        many=True, view_name="recipe-detail", read_only=True
+    )
+    lists = serializers.HyperlinkedRelatedField(
+        many=True, view_name="list-detail", read_only=True
+    )
+
     class Meta:
         model = User
-        fields = ["url", "id", "username"]
+        fields = [
+            "url",
+            "id",
+            "username",
+            "ingredients",
+            "quantities",
+            "recipes",
+            "lists",
+        ]
 
 
 class IngredientSerializer(serializers.HyperlinkedModelSerializer):
-    # owner = serializers.ReadOnlyField(source="owner.username")
+    owner = serializers.HyperlinkedRelatedField(view_name="user-detail", read_only=True)
 
     quantities = serializers.HyperlinkedRelatedField(
         many=True, view_name="quantity-detail", read_only=True
@@ -45,11 +66,19 @@ class IngredientSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Ingredient
-        fields = ["url", "id", "name", "created_on", "last_modified", "quantities"]
+        fields = [
+            "url",
+            "id",
+            "name",
+            "created_on",
+            "last_modified",
+            "quantities",
+            "owner",
+        ]
 
 
 class QuantitySerializer(serializers.HyperlinkedModelSerializer):
-    # owner = serializers.ReadOnlyField(source="owner.username")
+    owner = serializers.HyperlinkedRelatedField(view_name="user-detail", read_only=True)
 
     recipes = serializers.HyperlinkedRelatedField(
         many=True, view_name="recipe-detail", read_only=True
@@ -98,11 +127,12 @@ class QuantitySerializer(serializers.HyperlinkedModelSerializer):
             "last_modified",
             "recipes",
             "lists",
+            "owner",
         ]
 
 
 class RecipeSerializer(serializers.HyperlinkedModelSerializer):
-    # owner = serializers.ReadOnlyField(source="owner.username")
+    owner = serializers.HyperlinkedRelatedField(view_name="user-detail", read_only=True)
 
     lists = serializers.HyperlinkedRelatedField(
         many=True, view_name="list-detail", read_only=True
@@ -142,11 +172,12 @@ class RecipeSerializer(serializers.HyperlinkedModelSerializer):
             "created_on",
             "last_modified",
             "lists",
+            "owner",
         ]
 
 
 class ListSerializer(serializers.HyperlinkedModelSerializer):
-    # owner = serializers.ReadOnlyField(source="owner.username")
+    owner = serializers.HyperlinkedRelatedField(view_name="user-detail", read_only=True)
 
     created_on = serializers.DateTimeField(read_only=True)
     last_modified = serializers.DateTimeField(read_only=True)
@@ -182,18 +213,5 @@ class ListSerializer(serializers.HyperlinkedModelSerializer):
             "ingredients",
             "created_on",
             "last_modified",
+            "owner",
         ]
-
-
-"""
-Implement this later
-
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    snippets = serializers.HyperlinkedRelatedField(
-        many=True, view_name="snippet-detail", read_only=True
-    )
-
-    class Meta:
-        model = User
-        fields = ["url", "id", "username", "snippets"]
-"""
