@@ -11,6 +11,9 @@ class Ingredient(models.Model):
     name = models.CharField(max_length=50, unique=True)
     created_on = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
+    owner = models.ForeignKey(
+        "auth.User", related_name="ingredients", on_delete=models.CASCADE
+    )
 
     def __str__(self):
         return self.name
@@ -48,6 +51,9 @@ class Quantity(models.Model):
     # conversion_multiple should also have the editable=False option after once a calculation process is implemented
     created_on = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
+    owner = models.ForeignKey(
+        "auth.User", related_name="quantities", on_delete=models.CASCADE
+    )
 
     def __str__(self):
         return f"{self.quantity} {self.unit} {self.ingredient.name}"
@@ -78,6 +84,9 @@ class Recipe(models.Model):
     ingredients = models.ManyToManyField(Quantity, related_name="recipes")
     created_on = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
+    owner = models.ForeignKey(
+        "auth.User", related_name="recipes", on_delete=models.CASCADE
+    )
 
     def __str__(self):
         return self.name
@@ -92,6 +101,9 @@ class List(models.Model):
     ingredients = models.ManyToManyField(Quantity, blank=True, related_name="lists")
     created_on = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
+    owner = models.ForeignKey(
+        "auth.User", related_name="lists", on_delete=models.CASCADE
+    )
 
     def __str__(self):
         return self.title
