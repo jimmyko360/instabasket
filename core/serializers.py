@@ -1,10 +1,15 @@
 from rest_framework import serializers
 from core.models import Ingredient, Quantity, Recipe, List
-
-# from django.contrib.auth.models import User
+from django.contrib.auth.models import User
 
 # used to create a placeholder timezone that should be received from the frontend
 import pytz
+
+
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = User
+        fields = ["url", "id", "username"]
 
 
 class IngredientSerializer(serializers.HyperlinkedModelSerializer):

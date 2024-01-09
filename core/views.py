@@ -6,7 +6,15 @@ from core.serializers import (
     QuantitySerializer,
     RecipeSerializer,
     ListSerializer,
+    UserSerializer,
 )
+
+from django.contrib.auth.models import User
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
 
 class IngredientViewSet(viewsets.ModelViewSet):
