@@ -10,6 +10,8 @@ from core.serializers import (
 )
 
 from django.contrib.auth.models import User
+from rest_framework import permissions
+from core.permissions import IsOwner
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -20,7 +22,7 @@ class UserViewSet(viewsets.ModelViewSet):
 class IngredientViewSet(viewsets.ModelViewSet):
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated, IsOwner]
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
@@ -29,7 +31,7 @@ class IngredientViewSet(viewsets.ModelViewSet):
 class QuantityViewSet(viewsets.ModelViewSet):
     queryset = Quantity.objects.all()
     serializer_class = QuantitySerializer
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated, IsOwner]
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
@@ -38,7 +40,7 @@ class QuantityViewSet(viewsets.ModelViewSet):
 class RecipeViewSet(viewsets.ModelViewSet):
     queryset = Recipe.objects.all()
     serializer_class = RecipeSerializer
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated, IsOwner]
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
@@ -47,7 +49,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
 class ListViewSet(viewsets.ModelViewSet):
     queryset = List.objects.all()
     serializer_class = ListSerializer
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated, IsOwner]
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
