@@ -41,6 +41,12 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "dj_rest_auth",
+    # for use with dj-rest-auth registration
+    "django.contrib.sites",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "dj_rest_auth.registration",
 ]
 
 MIDDLEWARE = [
@@ -130,7 +136,12 @@ REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 10,
     "DEFAULT_AUTHENTICATION_CLASSES": [
+        # for use with dj-rest-auth registration
         "rest_framework.authentication.TokenAuthentication",
+        # for use with browsable API
         "rest_framework.authentication.SessionAuthentication",
     ],
 }
+
+# for use with dj-rest-auth registration
+SITE_ID = 1
