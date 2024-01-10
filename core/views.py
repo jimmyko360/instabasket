@@ -11,18 +11,17 @@ from core.serializers import (
 
 from django.contrib.auth.models import User
 from rest_framework import permissions
-from core.permissions import IsSuperUser, IsSelf, IsOwner
+from core.permissions import IsOwner
 
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [IsSelf | IsSuperUser]
 
-    def get_permissions(self):
-        if self.action == "list":
-            return [IsSuperUser()]
-        return super().get_permissions()
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            return User.objects.all()
+        return User.objects.filter(id=self.request.user.id)
 
 
 class IngredientViewSet(viewsets.ModelViewSet):
