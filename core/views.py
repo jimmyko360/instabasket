@@ -17,7 +17,7 @@ from core.permissions import IsSuperUser, IsSelf, IsOwner
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [IsSelf]
+    permission_classes = [IsSelf | IsSuperUser]
 
     def get_permissions(self):
         if self.action == "list":
