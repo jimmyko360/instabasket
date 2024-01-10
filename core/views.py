@@ -31,6 +31,8 @@ class IngredientViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated, IsOwner]
 
     def get_queryset(self):
+        if self.request.user.is_superuser:
+            return Ingredient.objects.all()
         return Ingredient.objects.filter(owner=self.request.user)
 
     def perform_create(self, serializer):
@@ -43,6 +45,8 @@ class QuantityViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated, IsOwner]
 
     def get_queryset(self):
+        if self.request.user.is_superuser:
+            return Quantity.objects.all()
         return Quantity.objects.filter(owner=self.request.user)
 
     def perform_create(self, serializer):
@@ -55,6 +59,8 @@ class RecipeViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated, IsOwner]
 
     def get_queryset(self):
+        if self.request.user.is_superuser:
+            return Recipe.objects.all()
         return Recipe.objects.filter(owner=self.request.user)
 
     def perform_create(self, serializer):
@@ -67,6 +73,8 @@ class ListViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated, IsOwner]
 
     def get_queryset(self):
+        if self.request.user.is_superuser:
+            return List.objects.all()
         return List.objects.filter(owner=self.request.user)
 
     def perform_create(self, serializer):
