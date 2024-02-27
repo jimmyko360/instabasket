@@ -141,8 +141,8 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         # for use with dj-rest-auth registration
         "rest_framework.authentication.TokenAuthentication",
-        # for use with browsable API
-        "rest_framework.authentication.SessionAuthentication",
+        # need to enable SessionAuthentication to use browsable API
+        # "rest_framework.authentication.SessionAuthentication",
     ],
 }
 
