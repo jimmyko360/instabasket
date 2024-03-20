@@ -12,7 +12,7 @@ from rest_framework.authtoken import views
 router = DefaultRouter()
 router.register(r"users", UserViewSet, basename="user")
 router.register(r"ingredients", IngredientViewSet, basename="ingredient")
-router.register(r"quantity", QuantityViewSet, basename="quantity")
+router.register(r"quantities", QuantityViewSet, basename="quantity")
 router.register(r"recipes", RecipeViewSet, basename="recipe")
 router.register(r"lists", ListViewSet, basename="list")
 
